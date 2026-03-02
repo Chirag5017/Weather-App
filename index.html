@@ -14,9 +14,9 @@
         </div>
         <div class="subHeading"> 
             <p class="timeAndDate">
-                <span>12:14</span> .
-                <span>Sun</span>,
-                <span>Mar 1</span>
+                <span>-</span> .
+                <span>-</span>,
+                <span>-</span>
             </p>
         </div>
     </header>
@@ -35,15 +35,15 @@
     <!-- Weather Display Section -->
      <section class="weatherSection">
         <div class="weatherTempContainer">
-            <h1 class="temperature">31.7°C</h1>
-            <p class="weatherCity">Delhi, India</p>
+            <h1 class="temperature">-</h1>
+            <p class="weatherCity">-</p>
             <p class="weatherClimate">
-                <span class="climateImg">
-                    <img src="./public/clear sky.png" alt="" height="22px">
+                <span class="climateImgContainer">
+                    <img src="./public/clear sky.png" alt="" height="22px" class="climateImg">
                     &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  
-                    Clear Sky
+                    <span class="climateDescription">-</span>
                 </span>
-                <span class="weatherDate"> Sunday, March 1</span>
+                <span class="weatherDate"> -</span>
             </p>
         </div>
         <div class="weatherFeatureContainer">
@@ -52,23 +52,20 @@
                 <button class="fahernheit">°F</button>
             </div>
             <div class="extraFeature">
-                <span class="weatherHumdity">
-                    <img src="./public/humidity.png" alt="" height="22px">
-                    &nbsp;&nbsp; &nbsp;
-                    9%
-                </span>
-                <span class="weatherWindSpeed">
-                    <img src="./public/wind.png" alt="" height="22px">
-                    &nbsp;&nbsp; &nbsp;
-                    20.7 Km/h
-                </span>
-                <span class="weatherVisibility">
-                    <img src="./public/rain.png" alt="" height="22px">
-                    &nbsp;&nbsp; &nbsp;
-                    10.0km
-                </span>
+                <div class="weatherHumdity">
+                    💧 <span class="humidityVal">-</span>
+                </div>
+                <div class="weatherWindSpeed">
+                    💨
+                    <span class="windSpeedVal">-</span>
+                </div>
+                <div class="weatherVisibility">
+                    👁 
+                   <span class="visibilityVal">-</span>
+                </div>
             </div>
         </div>
      </section>
+     <script src="script.js"></script>
 </body>
 </html>

@@ -4,27 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
+    <link rel="stylesheet" href="./src/output.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <!-- Header Section  -->
     <header>
         <div class="mainHeading">
             <h2>Weather</h2>
         </div>
         <div class="subHeading"> 
-            <p class="timeAndDate">
-                <span>-</span> .
-                <span>-</span>,
-                <span>-</span>
-            </p>
+            <p class="timeAndDate"></p>
         </div>
     </header>
+
     <!-- Search Bar Section  -->
     <section class="searchBarSection">
         <div class="searchBar">
             <form action="">
-                <input type="text" name="cityName" class="cityName">
+                <input type="text" name="cityName" class="cityName" placeholder="Search a city...." autocomplete="off">
                 <button class="searchBtn" type="submit">Go</button>
             </form>
         </div>
@@ -32,23 +31,27 @@
             <button class="myLocationBtn">+ My Location</button>
         </div>
     </section>
+    <section class="search-container">
+        <div class="dropdown"></div>
+    </section>
+
     <!-- Weather Display Section -->
      <section class="weatherSection">
         <div class="weatherTempContainer">
             <h1 class="temperature">-</h1>
             <p class="weatherCity">-</p>
-            <p class="weatherClimate">
-                <span class="climateImgContainer">
-                    <img src="./public/clear sky.png" alt="" height="22px" class="climateImg">
-                    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  
+            <div class="weatherClimate">
+                <span class="climateImgContainer glass">
+                    <img src="./public/clear sky.png" alt="" class="climateImg">
+                    <!-- &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;   -->
                     <span class="climateDescription">-</span>
                 </span>
                 <span class="weatherDate"> -</span>
-            </p>
+            </div>
         </div>
         <div class="weatherFeatureContainer">
             <div class="tempToggle">
-                <button class="celcius">°C</button>
+                <button class="celcius" value="active">°C</button>
                 <button class="fahernheit">°F</button>
             </div>
             <div class="extraFeature">
@@ -56,16 +59,34 @@
                     💧 <span class="humidityVal">-</span>
                 </div>
                 <div class="weatherWindSpeed">
-                    💨
-                    <span class="windSpeedVal">-</span>
+                    💨 <span class="windSpeedVal">-</span>
                 </div>
                 <div class="weatherVisibility">
-                    👁 
-                   <span class="visibilityVal">-</span>
+                    👁 <span class="visibilityVal">-</span>
                 </div>
             </div>
         </div>
      </section>
+
+     <!-- Empty State Section  -->
+      <section class="emptyStateSection">
+        <p>◎</p>
+        <p>Search a city or use your location</p>
+        <p>Forecast data powered by OpenWeatherMap</p>
+      </section>
+
+      <!-- Toast Seaction  -->
+      <section class="flex justify-center">
+        <div class="toast"></div>
+      </section>
+
+      <!-- Weather Forecast  -->
+      <section class="forecastSection">
+        <div class="forecastHeading">
+            <h3>5-Day Forecast</h3>
+        </div>
+        <div class="forecastCard"></div>
+      </section>
      <script src="script.js"></script>
 </body>
 </html>

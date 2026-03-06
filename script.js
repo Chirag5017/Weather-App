@@ -6,6 +6,8 @@ const timeAndDate = document.querySelector(".timeAndDate");
 
 const dropdown = document.querySelector(".dropdown");
 const weatherSection = document.querySelector('.weatherSection');
+const weatherBackground = document.querySelector("#weatherBackground");
+const weatherGlow = document.querySelector("#weatherGlow2")
 const temperature = document.querySelector(".temperature");
 const weatherCity = document.querySelector(".weatherCity");
 const climateImg = document.querySelector(".climateImg");
@@ -19,7 +21,7 @@ const fahernheitToggle = document.querySelector(".fahernheit");
 const emptyStateSection = document.querySelector(".emptyStateSection");
 const forecastCard = document.querySelector(".forecastCard");
 const forecastSection = document.querySelector(".forecastSection");
-
+const alert = document.querySelector("#alert");
 
 // API configuration
 const API_KEY = '94dce2c6f5a5d344214f6a19e5c2a027';
@@ -29,6 +31,18 @@ const BASE = 'https://api.openweathermap.org/data/2.5';
 
 // Variables to store fetched weather data and forecast data
 let currentWeather = [], currentForecast = [];
+
+// Weather colors object according to weather description
+const weatherColors = {
+  thunderstorm: "#8b5cf6",   // bright electric purple
+  showerRain: "#22d3ee",     // bright cyan rain
+  rain: "#3b82f6",           // vivid rain blue
+  snow: "#e0f2fe",           // icy bright white-blue
+  mist: "#67e8f9",           // glowing mist cyan
+  clearSky: "#facc15",       // sun yellow
+  overcastClouds: "#60a5fa", // bright cloudy blue
+  brokenClouds: "#93c5fd"    // light sky blue
+};
 
 // Function to update clock
 function updateClock() {
@@ -57,6 +71,17 @@ function displayWeather() {
     weatherSection.style.display = "flex";
     emptyStateSection.style.display = "none";
 
+    // Check for weather alerts for extreme temperatures
+    if(Number(currentWeather.main.temp) > 40) {
+        alert.innerHTML =  `⚠ Extreme heat warning ${currentWeather.main.temp}°C detected`;
+        alert.style.display = "block";
+    } else if(Number(currentWeather.main.temp) < 0) {
+        alert.innerHTML =  `⚠ Extreme cold warning ${currentWeather.main.temp}°C detected`;
+        alert.style.display = "block";
+    } else {
+        alert.style.display = "none";
+    }
+
     // Display temperature depending on selected unit
     if(celciusToggle.value === "active") {
         temperature.innerHTML = `${Number(currentWeather.main.temp).toFixed(1)}°C`;
@@ -68,10 +93,16 @@ function displayWeather() {
     weatherCity.innerHTML = `${currentWeather.name}, ${currentWeather.sys.country}`;
 
     // Set weather image based on description
-    climateImg.setAttribute('src', `./public/${currentWeather.weather[0].description}.png`);
+    const weatherIcon = getWeatherIcon(currentWeather.weather[0].id);
+    climateImg.setAttribute('src', `./public/${weatherIcon}.png`);
 
     // Display weather description
     climateDescription.innerHTML = currentWeather.weather[0].description;
+
+    // Set weather background 
+    weatherBackground.style.display = "block";
+    // weatherGlow.style.backgroundColor = weatherColors[weatherIcon];
+    weatherBackground.style.backgroundColor = weatherColors[weatherIcon];
 
     // Display today's date
     weatherDate.innerHTML =  new Date().toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' });
@@ -88,13 +119,14 @@ function displayWeather() {
     // Display 5 day forecast
     forecastSection.style.display = "flex"; 
     forecastCard.innerHTML = "";
-    let count = 0;
+    let count = 1;
     const today = new Date();
     currentForecast.list.forEach((data) => {
 
         // Only take date at 12:00 PM
         if(data.dt_txt.split(' ')[1] == "12:00:00") {
-
+            console.log(data);
+            
             // Calculate next date
             const nextDay = new Date();
             nextDay.setDate(today.getDate() + count);
@@ -106,6 +138,8 @@ function displayWeather() {
                 month: "short"
             });
 
+            const forecastIcon = getWeatherIcon(data.weather[0].id);
+
             // Create forecast card
             const forecastFeature = document.createElement("div");
             forecastFeature.className = "forecastFeature";
@@ -113,7 +147,7 @@ function displayWeather() {
             // Add forecast data
             forecastFeature.innerHTML = `
                 <p class="forecastDate">${formatted}</p>
-               <div> <img src="./public/mist.png" alt="" height=""></div>
+               <div> <img src="./public/${forecastIcon}.png" alt="forecastIcon" class="forecastIcon" height="22px"></div>
                 <p class="forecastTemp">${Number(data.main.temp).toFixed(1)}°C</p>
                 <p class="forecastHumidity">
                      💧 <span class="forecastHumidityVal">${data.main.humidity}%</span>
@@ -172,6 +206,18 @@ function displayCityNameInDropDown() {
     return true;
 }
 
+function getWeatherIcon(code) {
+    if (code >= 200 && code < 300) return "thunderstorm";
+    if (code >= 300 && code < 400) return "showerRain";
+    if (code >= 500 && code < 600) return "rain";
+    if (code >= 600 && code < 700) return "snow";
+    if (code >= 700 && code < 800) return "mist"
+    if (code === 800) return "clearSky";
+    if (code === 801 || code === 802 || code === 804) return "overcastClouds";
+    return "brokenClouds";
+}
+
+
 
 // Fetch weather and forecast by city name
 async function fetchWeatherByCityName(city) {
@@ -229,22 +275,19 @@ form.addEventListener("submit", async (e) => {
 
 })
 
-
-// ===============================
 // Get weather using current location
-// ===============================
-
 myLocation.addEventListener("click", () => {
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async (position) => {
             const lat = position.coords.latitude;
             const long = position.coords.longitude;
-            const {weather, forecast} =  await await fetchWeatherByCordinates(lat, long);
+            const {weather, forecast} =  await fetchWeatherByCordinates(lat, long);
             currentWeather = weather;
             currentForecast = forecast
             if(currentWeather.cod !== 200) {
                 showToast("Location error")
             } else  {
+                cityName.value = currentWeather.name
                 displayWeather();
                 saveCity();
             }
@@ -252,11 +295,7 @@ myLocation.addEventListener("click", () => {
     }
 })
 
-
-// ===============================
 // Show dropdown when input clicked
-// ===============================
-
 cityName.addEventListener("click", () => {
   const isTrue = displayCityNameInDropDown();
   if(isTrue) {
@@ -264,22 +303,14 @@ cityName.addEventListener("click", () => {
   }
 });
 
-
-// ===============================
 // Hide dropdown when clicking outside
-// ===============================
-
 document.addEventListener("click", (event) => {
   if(!event.target.closest(".cityName")) {
     dropdown.style.display = "none";
   }
 });
 
-
-// ===============================
 // Celsius toggle
-// ===============================
-
 celciusToggle.addEventListener('click', () => {
 
     celciusToggle.value = "active";
@@ -293,11 +324,7 @@ celciusToggle.addEventListener('click', () => {
     displayWeather();
 })
 
-
-// ===============================
 // Fahrenheit toggle
-// ===============================
-
 fahernheitToggle.addEventListener('click', () => {
 
     celciusToggle.value = "notActive";

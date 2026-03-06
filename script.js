@@ -34,15 +34,15 @@ let currentWeather = [], currentForecast = [];
 
 // Weather colors object according to weather description
 const weatherColors = {
-  thunderstorm: "#8b5cf6",   // bright electric purple
-  showerRain: "#22d3ee",     // bright cyan rain
-  rain: "#3b82f6",           // vivid rain blue
-  snow: "#e0f2fe",           // icy bright white-blue
-  mist: "#67e8f9",           // glowing mist cyan
-  clearSky: "#facc15",       // sun yellow
-  overcastClouds: "#60a5fa", // bright cloudy blue
-  brokenClouds: "#93c5fd"    // light sky blue
-};
+  thunderstorm: "#8b5cf6",
+  showerRain: "#22d3ee",
+  rain: "#3b82f6",
+  snow: "#e0f2fe",
+  mist: "#67e8f9",
+  clearSky: "#facc15",
+  overcastClouds: "#60a5fa", 
+  brokenClouds: "#93c5fd"   
+}
 
 // Function to update clock
 function updateClock() {
@@ -125,7 +125,7 @@ function displayWeather() {
 
         // Only take date at 12:00 PM
         if(data.dt_txt.split(' ')[1] == "12:00:00") {
-            console.log(data);
+            // console.log(data);
             
             // Calculate next date
             const nextDay = new Date();

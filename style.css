@@ -297,7 +297,7 @@ header {
 
 /* DropDown Section  */
 
-.dropDownContainer{
+.dropDownSection{
     min-width: 200px;
     position: absolute;
     top:22%;
@@ -398,6 +398,17 @@ header {
 }
 
 
+
+@media (min-width:768px) and (max-width:1024px) {
+    .dropDownSection{
+        min-width:586px;
+        position:absolute;
+        top:16.5%;
+        left:3%;
+        z-index:100;
+    }
+}
+
 @media (max-width: 480px) {
     .climateImgContainer {
         font-size: 10.7px;
@@ -406,14 +417,16 @@ header {
     .extraFeature {
         margin-left: 8px;
     }
-}
 
-@media (max-width: 768px) {
-    .dropDownContainer{
-        min-width: 586px;
+    .dropDownSection{
         position: absolute;
-        top:16.5%;
-        left: 3%;
+        top:22.5%;
+        left:24%;
         z-index: 100;
     }
-} 
+}
+
+/* width of scrollbar */
+::-webkit-scrollbar {
+  width: 0px;
+}

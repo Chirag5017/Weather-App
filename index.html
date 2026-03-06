@@ -9,6 +9,12 @@
 </head>
 <body>
 
+    <!-- Giving Some cool background  -->
+    <div class="fixed w-100 h-100 rounded-full blur-[80px] opacity-[0.15] bg-[#3b82f6] -top-25 -right-30"></div>
+    <div class="fixed w-75 h-75 rounded-full blur-[80px] opacity-[0.15] bg-[#6366f1] bottom-[8%] -left-20"></div>
+    <div class="fixed w-50 h-50 rounded-full blur-[80px] opacity-[0.15] bg-[#0ea5e9] top-[40%] right-[20%]"></div>
+    <div class="fixed w-75 h-75 rounded-full blur-[80px] opacity-[0.2] top-[20%] left-[30%]" id="weatherBackground"></div>
+
     <!-- Header Section  -->
     <header>
         <div class="mainHeading">
@@ -31,8 +37,13 @@
             <button class="myLocationBtn">+ My Location</button>
         </div>
     </section>
-    <section class="search-container">
+    <section class="dropDownContainer">
         <div class="dropdown"></div>
+    </section>
+
+    <!-- Alert Section -->
+    <section class="alertSection">
+        <div class="text-center bg-[rgba(248,113,113,0.1)] border border-[rgba(248,113,113,0.4)] rounded-lg text-[13px] text-[#f87171]" id="alert"></div>
     </section>
 
     <!-- Weather Display Section -->
@@ -41,8 +52,8 @@
             <h1 class="temperature">-</h1>
             <p class="weatherCity">-</p>
             <div class="weatherClimate">
-                <span class="climateImgContainer glass">
-                    <img src="./public/clear sky.png" alt="" class="climateImg">
+                <span class="climateImgContainer">
+                    <img src="./public/clearSky.png" alt="" class="climateImg">
                     <!-- &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;   -->
                     <span class="climateDescription">-</span>
                 </span>
